@@ -1,0 +1,24 @@
+
+<form action="{% url 'expenses:list_expenses_by_category' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Enviar">
+</form>
+
+<hr>
+<h3>{{ category_selected }}</h3>
+{% if list %}
+  <table>
+    <tr>
+        <th>Mês</th>
+        <th>Ano</th>
+        <th>Total</th>
+    </tr>
+  {% for result in list %}
+    <tr>
+      <td>{{ result.date__month }}</td>
+      <td>{{ result.date__year }}</td>
+      <td>{{ result.total|floatformat:2 }}</td>
+    </tr>
+  {% endfor %}
+{% endif %}
