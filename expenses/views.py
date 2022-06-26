@@ -5,6 +5,11 @@ from expenses.models import *
 
 from django.db.models import Sum
 
+def home(request):
+  return render(request,"base.html")
+
+
+
 def list_expenses_by_category(request):
   if request.method == 'POST':
     form = SelectCategoryForm(request.POST)

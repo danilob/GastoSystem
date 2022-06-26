@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title></title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800;900&display=swap" rel="stylesheet">
+        <link href="{% static 'expenses/css/core.css' %}" rel="stylesheet"/>
+    </head>
+    <body>
+        <header id="rect-yellow"></header>
+        <div id="img-irmao-jorel">
+            <img src="{% static '/expenses/img/irmao-do-jorel.png' %}" alt="" />
+        </div>
+        <main id="rect-content">
+            <div id="header-display">
+                <div id="display-total-limit">
+                    <div class="total"><p>R$</p><p>2935,25</p></div>
+                    <div class="limit"><div class="icon-limit"><img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /></div><p>30%</p></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li>Início</li>
+                        <li>Relatório</li>
+                        <li>Sobre</li>
+                    </ul>
+                </nav>
+                
+            </div>
+            <div class="actions">
+                <!-- <img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /> -->
+            </div>
+        </main>
+        <footer>
+            <div class="footer-desc">Desenvolvido por Danilo Borges da Silva. 2022.</div>
+            <div class="footer-img"><img src="{% static 'expenses/img/uespi-logo.png' %}"></div>
+        </footer>
+    </body>
+</html>
