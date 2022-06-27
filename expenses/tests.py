@@ -106,4 +106,5 @@ class TestExpenses(TestCase):
                 'total': 17
             },
         ]
-        self.assertQuerysetEqual(Expense.list_expenses_by_category(cat_1),result_expected)
+        self.assertQuerysetEqual(Expense.list_expenses_by_category(cat_1),
+                        result_expected)
