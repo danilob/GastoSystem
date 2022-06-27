@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class Category(models.Model):
     description = models.CharField("Categoria", max_length=150,primary_key=True)
@@ -49,6 +50,24 @@ class Expense(models.Model):
     def __str__(self):
       return f'{self.category.description.upper()} -{self.description.upper()} ({self.value})'
 
+    @staticmethod
+    def list_expenses_by_category(category):
+      from django.db.models import Sum
+      return Expense.objects.filter(category=category).values(
+        'date__year','date__month'
+        ).annotate(total=Sum('value')).order_by(
+          '-date__year','-date__month'
+          )
+
+    def clean(self):
+      if self.value<0:
+        raise ValidationError(f'''O valor '{self.value}' é inválido
+            - o valor deve ser maior ou igual a zero.''')
+      super(Expense, self).clean()
+
+    def save(self, *args, **kwargs):
+      self.full_clean()
+      super(Expense, self).save(*args, **kwargs)
 
 class Limit(models.Model):
     year = models.IntegerField("Ano")
@@ -67,3 +86,16 @@ class Limit(models.Model):
 
     def __str__(self):
       return f'{self.month}/{self.year} - {self.value}'
+
+    def clean(self):
+      if self.month>12 or self.month<1:
+        raise ValidationError(f'''O mês '{self.month}' é inválido
+          - o mês deve ser um número entre [1,12].''')
+      if self.value<0:
+        raise ValidationError(f'''O valor '{self.value}' é inválido
+            - o valor deve ser maior ou igual a zero.''')
+      super(Limit, self).clean()
+
+    def save(self, *args, **kwargs):
+      self.full_clean()
+      super(Limit, self).save(*args, **kwargs)
