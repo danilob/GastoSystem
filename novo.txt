@@ -1,4 +1,10 @@
 
+<<<<<<< HEAD
+=======
+
+Este é um Projeto do Curso de Ciências da Computação.
+
+>>>>>>> b828fb3de7e8a464ef8eb3892dc3835d43ed589d
 
 Overwatch 2 vai ser de graça e sera lançado em outubro deste ano
 
@@ -30,7 +36,20 @@ Paranaue
 One Piece é o melhor anime do mundo!
 ps: queria ter uma fazenda :(
 
+<<<<<<< HEAD
 Ola! Danilo.
 fala galerinha aqui é o Luan Gameplays
 
 
+=======
+
+
+Ola!
+
+Júlia esteve aqui uwu
+
+
+Ola! Danilo.
+fala galerinha aqui é o Luan Gameplays
+
+>>>>>>> b828fb3de7e8a464ef8eb3892dc3835d43ed589d
