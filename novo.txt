@@ -1,7 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ola!
 Ai mai vuaida, jesuais
 Paranaue
+=======
+One Piece é o melhor anime do mundo!
+ps: queria ter uma fazenda :(
+>>>>>>> 9cf26e1fa4a0e37c0fd678d9583f56b46f939a45
 =======
 
 Ola! Danilo.
