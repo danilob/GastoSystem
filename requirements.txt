@@ -1,4 +1,6 @@
 Django==3.2
 psycopg2==2.9.1
 python-decouple==3.5
-
+factory-boy==3.2.1
+Faker==13.3.2
+tqdm==4.64
