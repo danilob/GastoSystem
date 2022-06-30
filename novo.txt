@@ -1,1 +1,1 @@
-Ola!
+Este é um projeto do Gurso de Ciências da Computação.
