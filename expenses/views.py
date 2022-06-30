@@ -3,14 +3,13 @@ from django.shortcuts import render
 from expenses.forms import SelectCategoryForm
 from expenses.models import *
 
-from django.db.models import Sum
 
 def list_expenses_by_category(request):
   if request.method == 'POST':
     form = SelectCategoryForm(request.POST)
     if form.is_valid():
       category = form.cleaned_data['category']
-      list = Expense.objects.filter(category=category).values('date__year','date__month').annotate(total=Sum('value')).order_by('-date__year','-date__month')
+      list = Expense.list_expenses_by_category(category)
       context = {
         'form': form,
         'category_selected': category,
