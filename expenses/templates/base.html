@@ -2,9 +2,10 @@
 {% load static %}
 <html>
     <head>
-        <title></title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800;900&display=swap" rel="stylesheet">
-        <link href="{% static 'expenses/css/core.css' %}" rel="stylesheet"/>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;800;900&display=swap" rel="stylesheet">
+        <link href="{% static 'expenses/css/core.css' %}" rel="stylesheet"/> 
     </head>
     <body>
         <header id="rect-yellow"></header>
@@ -14,25 +15,39 @@
         <main id="rect-content">
             <div id="header-display">
                 <div id="display-total-limit">
-                    <div class="total"><p>R$</p><p>2935,25</p></div>
-                    <div class="limit"><div class="icon-limit"><img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /></div><p>30%</p></div>
+                    {% block display-values %}
+                    {% endblock %}
                 </div>
+                
                 <nav>
                     <ul>
-                        <li>Início</li>
-                        <li>Relatório</li>
-                        <li>Sobre</li>
+                        <li id="nav-home" {% if page_selected == "home" %}class = "current-page"{% endif %}>Início</li>
+                        <li id="nav-report" {% if page_selected == "report" %}class = "current-page"{% endif %}>Relatório</li>
+                        <li id="nav-about" {% if page_selected == "about" %}class = "current-page"{% endif %}>Sobre</li>
                     </ul>
                 </nav>
                 
             </div>
-            <div class="actions">
-                <!-- <img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /> -->
-            </div>
+            {% block content %}
+            {% endblock %}
         </main>
         <footer>
             <div class="footer-desc">Desenvolvido por Danilo Borges da Silva. 2022.</div>
             <div class="footer-img"><img src="{% static 'expenses/img/uespi-logo.png' %}"></div>
         </footer>
+        <script src="{% static 'expenses/js/jquery-3.6.0.min.js' %}"/></script>
+        <script>
+            $(document).ready(function(){
+                $("#nav-home").click(function() {
+                    window.open("{% url 'expenses:home' %}","_self")
+                });
+                $("#nav-report").click(function() {
+                    window.open("{% url 'expenses:report' %}","_self")
+                });
+                $("#nav-about").click(function() {
+                    window.open("{% url 'expenses:about' %}","_self")
+                });
+            });
+        </script>
     </body>
 </html>

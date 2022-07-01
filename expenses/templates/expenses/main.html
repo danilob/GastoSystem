@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Página Inicial{% endblock %}
+{% block display-values %}
+    <div class="total"><p>R$</p><p>2935,25</p></div>
+    <div class="limit"><div class="icon-limit svg-white"><img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /></div><p>30%</p></div>
+{% endblock %}
+
+
+{% block content %}  
+    <div class="actions">
+        <div class="selection">
+            <form action="" request="POST">
+                <select style="width: 130px;" name="cars" id="cars">
+                    <option value="05-2022">2022/Maio</option>
+                </select>
+            </form>
+        </div>
+        <div class="group-insert-change">
+            <div class="header-group">
+                <p>Inserir ou Alterar</p>
+            </div>
+            <div class="btn-actions">
+                <div class="btn btn-red">
+                    <img class="svg-white" src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" />
+                </div>  
+                <div class="btn btn-gray">
+                    <img class="svg-white" src="{% static 'expenses/img/icon/money-bill-trend-up-solid.svg' %}" />
+                </div> 
+                <div class="btn btn-yellow">
+                    <img class="svg-gray" src="{% static 'expenses/img/icon/cash-register-solid.svg' %}" />
+                </div>  
+                <div class="btn btn-yellow">
+                    <img class="svg-gray" src="{% static 'expenses/img/icon/pizza-slice-solid.svg' %}" />
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="list-expenses">
+        <div class="description-top">
+            <p>Últimos Gastos</p>
+        </div>
+        <div class="description-itens">
+            <p class="col-1">Data</p>
+            <p class="col-3">Descrição</p>
+            <p class="col-1">Categoria</p>
+            <p class="col-1">Forma Pagamento</p>
+            <p class="col-1">Valor</p>
+            <p class="col-1">Ação</p>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        <div class="line-item">
+            <p class="col-1">26/05/2022</p>
+            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
+            <p class="col-1">Lanche</p>
+            <p class="col-1">Pix</p>
+            <p class="col-1">R$ 5,00</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+                <div class="btn-inline">
+                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="page-numbers">
+        <div class="back-page-items"><a href="#">Página Anterior</a></div>
+        <div class="current-page-items">
+            <p>Página Atual</p>
+            <p>2/10</p>
+        </div>
+        <div class="next-page-items"><a href="#">Próxima Página</a></div>    
+    </div>
+{% endblock %}

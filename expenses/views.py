@@ -5,7 +5,23 @@ from expenses.models import *
 
 
 def home(request):
-  return render(request,"base.html")
+  # context = {
+  #    'page_selected': "home",
+  # }
+  # return render(request,"expenses/main.html", context)
+  return render(request,"base.html", context={})
+
+def about(request):
+  context = {
+     'page_selected': "about",
+  }
+  return render(request,"expenses/about.html", context)
+
+def report(request):
+  context = {
+     'page_selected': "report",
+  }
+  return render(request,"expenses/report.html", context)
 
 
 
