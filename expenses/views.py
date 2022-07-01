@@ -4,6 +4,11 @@ from expenses.forms import SelectCategoryForm
 from expenses.models import *
 
 
+def home(request):
+  return render(request,"base.html")
+
+
+
 def list_expenses_by_category(request):
   if request.method == 'POST':
     form = SelectCategoryForm(request.POST)

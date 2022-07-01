@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --color-yellow: #FCE600;
+    --color-red: #F33C40;
+    --color-gray: #5A5F63;
+    --color-gray-light: #F2F2F2;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background-color: var(--color-gray-light);
+}
+
+footer{
+    color: var(--color-gray);
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.625em;
+
+}
+
+.footer-desc {
+    font-size: 0.625rem;
+    margin-right: 1em;
+}
+
+.footer-img > img {
+    height: 5vh;
+}
+
+#rect-yellow{
+    height: 18vh;
+    background-color: var(--color-yellow);
+    z-index: -100;
+}
+
+#img-irmao-jorel{
+    margin-top: -20vh;
+    margin-bottom: -1vh;
+
+}
+
+#img-irmao-jorel > img{
+    height: 12vh;
+    display: inline-block;
+    padding: 2vh 0 0 32.3vw;
+    /*padding: 2vh 0 0 49vw;*/
+}
+
+#rect-content{
+    height: 80vh;
+    width: 60%;
+    border-radius: 10px;
+    background-color: white;
+    margin: 0 auto;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+
+#header-display{
+    display: flex;
+    justify-content: space-between;
+}
+
+#display-total-limit{
+    margin-top: -11vh;
+    margin-left: 2.7vw;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.total{
+    width: 22.5vh;
+    height: 22.5vh;
+    border-radius: 50%;
+    background-color: var(--color-gray);
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
+.limit{
+    width: 10vh;
+    height: 10vh;
+    border-radius: 50%;
+    background-color: var(--color-red);
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
+    margin-top: -7vh;
+    margin-left:-1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.icon-limit > img {
+    margin-left: 0.5em;
+    width: 50%;   
+    filter: invert(96%) sepia(98%) saturate(7%) hue-rotate(143deg) brightness(104%) contrast(102%);
+}
+
+.limit > p:first-of-type{
+    margin-top: -0.75em;
+    margin-left: 0.5em;
+    font-size: 1.225rem;
+}
+
+.total > p:first-of-type{
+    margin-top: -1em;
+}
+
+.total > p:last-of-type{
+    font-size: 2rem;
+}
