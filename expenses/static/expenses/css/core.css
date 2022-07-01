@@ -367,3 +367,24 @@ ul li:hover{
     text-decoration: none;
     color: var(--color-red);
 }
+
+.content-about{
+    margin-left: 2em;
+}
+
+section > ul li{
+    list-style: none;
+    margin-left: 1em;
+    
+}
+
+section > ul li:hover{
+    color: inherit;
+    cursor: inherit;
+    
+}
+
+section > header p{
+    border-bottom: 1px solid var(--color-gray);
+    margin: 1em 1em 1em 0;
+}
