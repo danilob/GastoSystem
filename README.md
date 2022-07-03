@@ -23,6 +23,12 @@ Este sistema foi desenvolvido para rodar em containers utilizando docker-compose
 docker-compose up --build
 ```
 
+Para parar o docker-compose execute:
+
+```bash
+docker-compose down
+```
+
 Caso seja preciso realizar algum comando do `manage.py` dê permissão de execução ao arquivo `.run` e depois execute o comando:
 
 ```bash
