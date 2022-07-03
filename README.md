@@ -17,7 +17,7 @@ Para melhor anotar as coisas, o irmão do Jorel quer um sistema. Esse sistema de
 
 ## Execução
 
-Este sistema foi desenvolvido para rodar em containers utilizando docker-compose. Na raiz do projeto execute:
+Este sistema foi desenvolvido para rodar em containers utilizando docker-compose. Logo, para executar o projeto será preciso ter instalado o docker e o docker-compose. Na raiz do projeto execute:
 
 ```bash
 docker-compose up --build
