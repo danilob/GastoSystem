@@ -101,6 +101,8 @@ class Command(BaseCommand):
         print("Creating expenses")
         from random import choice
         for i in trange(500):
+            
+           
             while True:
                 try:
                     pks = Category.objects.values_list('pk', flat=True)
@@ -109,7 +111,7 @@ class Command(BaseCommand):
                     pks = Payment.objects.values_list('pk', flat=True)
                     random_pk = choice(pks)
                     payment = Payment.objects.get(pk=random_pk)
-                    value = factory.fuzzy.FuzzyFloat(0.1, 500).fuzz()
+                    value = factory.fuzzy.FuzzyInteger(1, 500).fuzz()
                     description = f'{Faker().sentence()}'
                     date = Faker().date_between_dates(datetime(year=2018, month=1, day=1),datetime(year=2021, month=12, day=31))
                     Expense.objects.create(category=category,payment=payment,value=value,description=description,date=date)
