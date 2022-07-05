@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Página Inicial{% endblock %}
+{% block style %}
+    <link href="{% static 'expenses/css/modal.css' %}" rel="stylesheet"/> 
+{% endblock %}
 {% block display-values %}
     <div class="total"><p>R$</p><p id="total_by_month">{% if not total_current_month %}0,00{% else %}{{ total_current_month|floatformat:2 }}{% endif %}</p></div>
     <div class="limit"><div class="icon-limit svg-white"><img src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" /></div><p id="limit_percent_by_month">??%</p></div>
@@ -25,16 +28,16 @@
                 <p>Inserir ou Alterar</p>
             </div>
             <div class="btn-actions">
-                <div class="btn btn-red">
+                <div class="btn btn-red action-modal" data-action="handle-limit">
                     <img class="svg-white" src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" />
                 </div>  
-                <div class="btn btn-gray">
+                <div class="btn btn-gray action-modal" data-action="create-expense">
                     <img class="svg-white" src="{% static 'expenses/img/icon/money-bill-trend-up-solid.svg' %}" />
                 </div> 
-                <div class="btn btn-yellow">
+                <div class="btn btn-yellow action-modal" data-action="handle-payment">
                     <img class="svg-gray" src="{% static 'expenses/img/icon/cash-register-solid.svg' %}" />
                 </div>  
-                <div class="btn btn-yellow">
+                <div class="btn btn-yellow action-modal" data-action="handle-category">
                     <img class="svg-gray" src="{% static 'expenses/img/icon/pizza-slice-solid.svg' %}" />
                 </div> 
             </div>
@@ -69,83 +72,6 @@
             </div>
         </div>
         {% endfor %}
-        <!-- <div class="line-item">
-            <p class="col-1">26/05/2022</p>
-            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
-            <p class="col-1">Lanche</p>
-            <p class="col-1">Pix</p>
-            <p class="col-1">R$ 5,00</p>
-            <div class="action-item col-1">
-                <div class="btn-inline">
-                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
-                </div>
-                <div class="btn-inline">
-                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
-                </div>
-            </div>
-        </div>
-        <div class="line-item">
-            <p class="col-1">26/05/2022</p>
-            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
-            <p class="col-1">Lanche</p>
-            <p class="col-1">Pix</p>
-            <p class="col-1">R$ 5,00</p>
-            <div class="action-item col-1">
-                <div class="btn-inline">
-                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
-                </div>
-                <div class="btn-inline">
-                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
-                </div>
-            </div>
-        </div>
-        <div class="line-item">
-            <p class="col-1">26/05/2022</p>
-            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
-            <p class="col-1">Lanche</p>
-            <p class="col-1">Pix</p>
-            <p class="col-1">R$ 5,00</p>
-            <div class="action-item col-1">
-                <div class="btn-inline">
-                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
-                </div>
-                <div class="btn-inline">
-                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
-                </div>
-            </div>
-        </div>
-        <div class="line-item">
-            <p class="col-1">26/05/2022</p>
-            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
-            <p class="col-1">Lanche</p>
-            <p class="col-1">Pix</p>
-            <p class="col-1">R$ 5,00</p>
-            <div class="action-item col-1">
-                <div class="btn-inline">
-                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
-                </div>
-                <div class="btn-inline">
-                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
-                </div>
-            </div>
-        </div>
-        <div class="line-item">
-            <p class="col-1">26/05/2022</p>
-            <p class="col-3">Coxinha e suco na lanchonete da UESPI</p>
-            <p class="col-1">Lanche</p>
-            <p class="col-1">Pix</p>
-            <p class="col-1">R$ 5,00</p>
-            <div class="action-item col-1">
-                <div class="btn-inline">
-                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
-                </div>
-                <div class="btn-inline">
-                    <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
-                </div>
-            </div>
-        </div> -->
-        
-
     </div>
     <div class="page-numbers">
         <div class="back-page-items"><a href="{% url 'expenses:home' current_page|add:'-1' %}">Página Anterior</a></div>
@@ -157,6 +83,8 @@
     </div>
     <script src="{% static 'expenses/js/jquery-3.6.0.min.js' %}"/></script>
 
+
+    {% include "expenses/modal.html" %}
     <script>
         $(document).ready(function(){
             $('select').on('change', function (e) {
@@ -182,10 +110,56 @@
                     },
                     error: function (response) {
                         // alert the error if any error occured
-                        
+                        console.log("Error", response)
                     }
                 })
             });
+            
+            //controle de modal
+            var modal = document.querySelector("#modal");
+            var modalOverlay = document.querySelector("#modal-overlay");
+            var closeButton = document.querySelector("#close-button");
+            var openButton = document.querySelector("#open-button");
+
+
+
+            closeButton.addEventListener("click", function() {
+                modal.classList.remove("open");
+                modal.classList.toggle("closed");
+                modalOverlay.classList.remove("open");
+                modalOverlay.classList.toggle("closed");
+            });
+
+            const action_modal = {
+                'create-expense': "{% url 'expenses:create_expense' %}",
+                'handle-limit': "{% url 'expenses:handle_limit' %}",
+                'handle-payment': "{% url 'expenses:handle_payment' %}",
+                'handle-category': "{% url 'expenses:handle_category' %}",
+            }
+
+            $(".action-modal").on('click', function(){
+                //console.log($(this).data().action)
+                
+                $.ajax({
+                    type: 'GET',
+                    url: action_modal[$(this).data().action],
+                    success: function (response) {
+                        $('.modal-description').text(response.title);
+                        $('.modal-content').html(response.html);
+                        modal.classList.remove("closed");
+                        modal.classList.toggle("open");
+                        modalOverlay.classList.remove("closed");
+                        modalOverlay.classList.toggle("open");
+                    },
+                    error: function (response) {
+                        // alert the error if any error occured
+                        console.log("Error", response)
+                    }
+                    
+                });
+                
+            });
+            
         });
     </script>
 {% endblock %}
