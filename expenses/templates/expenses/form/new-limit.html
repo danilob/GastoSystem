@@ -1,0 +1,97 @@
+<form method="POST" id="formExpense">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="btn-position-modal">
+        <input type="button" class="btn btn-red sub white small "  id="cancelModal" value="Cancelar">
+        <input class="btn btn-gray sub white small " type="submit" value="Enviar">
+    </div>
+    
+</form>
+<div class="output"></div>
+<script>
+    $(".output").hide();
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    function sameOrigin(url) {
+
+    var host = document.location.host;
+    var protocol = document.location.protocol;
+    var sr_origin = '//' + host;
+    var origin = protocol + sr_origin;
+
+    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+
+    !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+        }
+    }
+    }
+    return cookieValue;
+    }
+    $('#formExpense').on('submit', function(e){     
+        e.preventDefault();
+        
+        
+        $.ajax({
+            type : "POST", 
+            url: "{% url 'expenses:create_expense' %}",
+            data: {
+                category : $('#id_category').val(),
+                payment : $('#id_payment').val(),
+                description : $('#id_description').val(),
+                value : $('#id_value').val(),
+                date : $('#id_date').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            
+            success: function(data){
+                $('.modal-content').html(data.html);
+                $('.output').text(data.response);
+                $(".output").show();
+            },
+        
+            failure: function() {
+                
+            }
+        
+        
+        });
+        
+        
+    }); 
+
+    var modal = document.querySelector("#modal");
+    var modalOverlay = document.querySelector("#modal-overlay");
+    var closeButton = document.querySelector("#close-button");
+    var openButton = document.querySelector("#open-button");
+
+    $('#cancelModal').on('click', function(){
+        modal.classList.remove("open");
+        modal.classList.toggle("closed");
+        modalOverlay.classList.remove("open");
+        modalOverlay.classList.toggle("closed");
+    });
+</script>
