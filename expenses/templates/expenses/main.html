@@ -66,7 +66,7 @@
                 <div class="btn-inline">
                     <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
                 </div>
-                <div class="btn-inline">
+                <div class="btn-inline action-modal" data-action="edit-category" data-id="{{ item.id }}">
                     <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
                 </div>
             </div>
@@ -135,14 +135,23 @@
                 'handle-limit': "{% url 'expenses:handle_limit' %}",
                 'handle-payment': "{% url 'expenses:handle_payment' %}",
                 'handle-category': "{% url 'expenses:handle_category' %}",
+                'edit-category': "{% url 'expenses:edit_expense' %}",
             }
 
             $(".action-modal").on('click', function(){
                 //console.log($(this).data().action)
-                
+                new_data = {}
+                if($(this).data().id){
+                    new_data = {
+                        id: $(this).data().id,
+                    }
+                }
+
+
                 $.ajax({
                     type: 'GET',
                     url: action_modal[$(this).data().action],
+                    data: new_data,
                     success: function (response) {
                         $('.modal-description').text(response.title);
                         $('.modal-content').html(response.html);

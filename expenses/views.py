@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.urls import reverse
 
@@ -86,11 +87,6 @@ def home(request,page=None):
   #   list_item_expenses = Expense.objects.all()[:NUMBER_ITENS]
   # else:
   #   list_item_expenses = Expense.objects.all()
-
-
-
-  
-
   
   context = {
      'page_selected': "home",
@@ -219,6 +215,20 @@ def handle_payment(request):
   response = {
     'title' : title,
     'html' : 'a fazer...',
+    
+  }
+  return JsonResponse(response, status = 200)
+
+def edit_expense(request):
+  title = 'Alterar Gasto'
+  expense = Expense.objects.get(id=request.GET['id'])
+  context = {
+    'expense': expense,
+  }
+  html_page = render_to_string('expenses/form/edit-expense.html', context)
+  response = {
+    'title' : title,
+    'html' : html_page,
     
   }
   return JsonResponse(response, status = 200)
