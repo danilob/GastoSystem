@@ -393,3 +393,14 @@ section > header p{
     border-bottom: 1px solid var(--color-gray);
     margin: 1em 1em 1em 0;
 }
+
+.breadcamp{
+    margin-left: 1em;
+    font-size: .875rem;
+    font-weight: 200;
+    margin-bottom: 1em;
+}
+
+.report-list{
+    margin-left: 2em;
+}

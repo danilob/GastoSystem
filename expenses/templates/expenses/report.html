@@ -2,5 +2,9 @@
 {% load static %}
 {% block title %}Relatórios{% endblock %}
 {% block content %}
-    Contéudo de relatório...
+<div class="breadcamp">Todos os Relatórios</div>
+
+    <ul class="report-list">
+        <li><a href="{% url 'expenses:list_expenses_by_category' %}">Relatório de Gastos Mensais por Categoria</a></li>
+    </ul>
 {% endblock %}

@@ -126,7 +126,8 @@ def list_expenses_by_category(request):
       context = {
         'form': form,
         'category_selected': category,
-        'list':list
+        'list':list,
+        'page_selected': "report",
       }
       return render(request,'expenses/list-expenses-by-category.html',context)
   form = SelectCategoryForm()
