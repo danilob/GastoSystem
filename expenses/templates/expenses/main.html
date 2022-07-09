@@ -146,8 +146,11 @@
                         id: $(this).data().id,
                     }
                 }
-
-
+                if($(this).data().action == 'handle-limit'){
+                    new_data = {
+                        month_year: $('#list_month_year :selected').val(),
+                    }
+                }
                 $.ajax({
                     type: 'GET',
                     url: action_modal[$(this).data().action],

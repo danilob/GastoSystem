@@ -17,6 +17,16 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = '__all__'
 
+from expenses.models import Limit
+
+class LimitForm(forms.ModelForm):
+    class Meta:
+        model = Limit
+        fields = '__all__'
+
+    year = forms.IntegerField(disabled=True)
+    month = forms.IntegerField(disabled=True)
+
 
 class ExpenseForm(forms.ModelForm):
     class Meta:

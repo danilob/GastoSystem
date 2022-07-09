@@ -227,13 +227,54 @@ def handle_category(request):
   }
   return JsonResponse(response, status = 200)
 
-
+from expenses.forms import LimitForm
+from expenses.models import Limit
 def handle_limit(request):
   title = 'Inserir Limite'
+
+  
+  context_extra = {}
+  if request.POST.get('action') == 'post':
+    
+    month, year = request.POST['month'], request.POST['year']
+ 
+    if Limit.objects.filter(month=month,year=year).exists():
+      instance = Limit.objects.get(month=month,year=year)
+      form = LimitForm(request.POST,instance=instance)
+    else:
+      form = LimitForm(request.POST)
+    
+    if form.is_valid():
+      model = form.save(commit=False)
+      model.save()
+      context_extra = {
+          'response' : 'Criado com sucesso!',
+          'error': False,
+      }
+    else:
+      context_extra = {
+          'response' : 'Erros ocorreram!',
+          'error': True
+      }
+   
+  else:
+    value = request.GET['month_year']
+    value = value.split('-')
+    month, year = value[0], value[1]
+    total = 0
+    if Limit.objects.filter(month=month,year=year).exists():
+      total = Limit.objects.get(month=month,year=year).value
+    form = LimitForm(initial={'month': month, 'year': year, 'value': total})
+  context = {
+    'form': form,
+  
+  }
+  html_page = render_to_string('expenses/form/handle-limit.html', context)
   response = {
     'title' : title,
-    'html' : 'a fazer...',
-    
+    'html' : html_page,
+    'response' : context_extra['response'] if 'response' in context_extra else None,
+    'error': context_extra['error'] if 'error' in context_extra else None,
   }
   return JsonResponse(response, status = 200)
 
