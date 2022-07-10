@@ -4,11 +4,35 @@
     image-rendering: smooth;
 }
 
-:root{
+:root {
     --color-yellow: #FCE600;
     --color-red: #F33C40;
     --color-gray: #5A5F63;
     --color-gray-light: #F2F2F2;
+}
+
+html[data-theme='light'] {
+    --color-yellow: #FCE600;
+    --color-red: #F33C40;
+    --color-gray: #5A5F63;
+    --color-gray-light: #F2F2F2;
+}
+
+html[data-theme='dark'] {
+    --color-yellow: #00ADB5;
+    --color-red: #FD7014;
+    --color-gray: #393E46;
+    --color-gray-light: #DDDDDD;
+}
+
+.btn-link{
+    display: flex;
+    width: 5%;  
+
+}
+
+.btn-link-color{
+    filter: invert(38%) sepia(9%) saturate(260%) hue-rotate(165deg) brightness(93%) contrast(95%);
 }
 
 body {

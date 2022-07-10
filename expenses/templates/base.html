@@ -11,9 +11,35 @@
     <body>
         <header id="rect-yellow"></header>
         <div id="img-irmao-jorel">
-            <img src="{% static '/expenses/img/irmao-do-jorel.png' %}" alt="" />
+            <button id="theme-toggle" class="btn-link" type="button">
+                <span><img class="btn-link-color" src="{% static 'expenses/img/icon/moon.svg' %}" /></span>
+                <span><img class="btn-link-color" src="{% static 'expenses/img/icon/sun.svg' %}" /></span>
+            </button>
+                
+            <script>
+                var toggle = document.getElementById("theme-toggle");
+    
+                var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                if (storedTheme)
+                    document.documentElement.setAttribute('data-theme', storedTheme)
+    
+    
+                toggle.onclick = function() {
+                    var currentTheme = document.documentElement.getAttribute("data-theme");
+                    var targetTheme = "light";
+    
+                        if (currentTheme === "light") {
+                            targetTheme = "dark";
+                        }
+    
+                        document.documentElement.setAttribute('data-theme', targetTheme)
+                        localStorage.setItem('theme', targetTheme);
+                };
+            </script>
+            <img src= "{% static '/expenses/img/irmao-do-jorel-dark-mode.png' %}" alt="" />
         </div>
         <main id="rect-content">
+
             <div id="header-display">
                 <div id="display-total-limit">
                     {% block display-values %}
@@ -50,5 +76,5 @@
                 });
             });
         </script>
-    </body>
+    </body>      
 </html>
