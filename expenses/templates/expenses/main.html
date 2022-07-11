@@ -140,9 +140,14 @@
             $(".action-modal").on('click', function(){
                 //console.log($(this).data().action)
                 new_data = {}
-                if($(this).data().id){
+                if($(this).data().action == 'edit-category'){
                     new_data = {
                         id: $(this).data().id,
+                    }
+                }
+                if($(this).data().action == 'handle-limit'){
+                    new_data = {
+                        month_year: $('#list_month_year :selected').val(),
                     }
                 }
                 
