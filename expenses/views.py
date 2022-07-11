@@ -115,6 +115,12 @@ def report(request):
   }
   return render(request,"expenses/report.html", context)
 
+def bank_loan(request):
+  context = {
+     'page_selected': "bank-loan",
+  }
+  return render(request,"expenses/bank-loan.html", context)
+
 
 
 def list_expenses_by_category(request):
@@ -126,12 +132,14 @@ def list_expenses_by_category(request):
       context = {
         'form': form,
         'category_selected': category,
-        'list':list
+        'list':list,
+        'page_selected': "report",
       }
       return render(request,'expenses/list-expenses-by-category.html',context)
   form = SelectCategoryForm()
   context = {
     'form': form,
+    'page_selected': "report",
   }
   return render(request,'expenses/list-expenses-by-category.html',context)
 
@@ -277,6 +285,9 @@ def handle_payment(request):
     'error': context_extra['error'] if 'error' in context_extra else None,
   }
   return JsonResponse(response, status = 200)
+
+from expenses.forms import EditExpenseForm
+@csrf_exempt
 
 def edit_expense(request):
   title = 'Alterar Gasto'

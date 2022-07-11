@@ -10,6 +10,7 @@ urlpatterns = [
     path('get/report/list-expenses-by-category/', list_expenses_by_category, name="list_expenses_by_category"),
     path('report/', report, name="report"),
     path('about/', about, name="about"),
+    path('bank-loan/', bank_loan, name="bank_loan"),
 
     path('get-total-expenses/',get_total_expenses_ajax,name="get_total_expenses_ajax"),
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('handle/limit', handle_limit, name="handle_limit"),
     path('handle/payment', handle_payment, name="handle_payment"),
     path('handle/category', handle_category, name="handle_category"),
+    path('edit/expense', edit_expense, name="edit_expense"),
 
     
 ]

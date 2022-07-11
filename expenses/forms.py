@@ -24,6 +24,14 @@ class PaymentForm(forms.ModelForm):
         model = Payment
         fields = ['description']
     
+class EditExpenseForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ['category','payment','description','value','date']
+        labels = {
+            'category': 'Categoria',
+            'payment': 'Pagamento'
+        }
 
 class ExpenseForm(forms.ModelForm):
     class Meta:

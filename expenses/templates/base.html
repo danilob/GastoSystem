@@ -23,8 +23,10 @@
                 <nav>
                     <ul>
                         <li id="nav-home" {% if page_selected == "home" %}class = "current-page"{% endif %}>Início</li>
+                        <li id="nav-bank-loan" {% if page_selected == "bank-loan" %}class = "current-page"{% endif %}>Empréstimo</li>
                         <li id="nav-report" {% if page_selected == "report" %}class = "current-page"{% endif %}>Relatório</li>
                         <li id="nav-about" {% if page_selected == "about" %}class = "current-page"{% endif %}>Sobre</li>
+                        
                     </ul>
                 </nav>
                 
@@ -33,7 +35,7 @@
             {% endblock %}
         </main>
         <footer>
-            <div class="footer-desc">Desenvolvido por Danilo Borges da Silva. 2022.</div>
+            <div class="footer-desc">Desenvolvido por Macrosoft. 2022.</div>
             <div class="footer-img"><img src="{% static 'expenses/img/uespi-logo.png' %}"></div>
         </footer>
         <script src="{% static 'expenses/js/jquery-3.6.0.min.js' %}"/></script>
@@ -44,6 +46,9 @@
                 });
                 $("#nav-report").click(function() {
                     window.open("{% url 'expenses:report' %}","_self")
+                });
+                $("#nav-bank-loan").click(function() {
+                    window.open("{% url 'expenses:bank_loan' %}","_self")
                 });
                 $("#nav-about").click(function() {
                     window.open("{% url 'expenses:about' %}","_self")

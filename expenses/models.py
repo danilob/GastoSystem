@@ -50,6 +50,8 @@ class Expense(models.Model):
     def __str__(self):
       return f'{self.category.description.upper()} -{self.description.upper()} ({self.value})'
 
+
+
     @staticmethod
     def list_expenses_by_category(category):
       from django.db.models import Sum
@@ -58,7 +60,7 @@ class Expense(models.Model):
         ).annotate(total=Sum('value')).order_by(
           '-date__year','-date__month'
           )
-
+     
     def clean(self):
       if self.value<0:
         raise ValidationError(f'''O valor '{self.value}' é inválido
