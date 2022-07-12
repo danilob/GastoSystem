@@ -14,10 +14,24 @@ from expenses.models import Category
 
 from expenses.models import Payment
 
+from expenses.models import Limit
+
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['description']
+        fields = '__all__'
+
+class LimitForm(forms.ModelForm):
+    class Meta:
+        model = Limit
+        fields = ['year','month','value']
+        labels = {
+            'year': 'Ano',
+            'month': 'Mês',
+            'value': 'Valor',
+        }
+    # year = forms.IntegerField(disabled=True)
+    # month = forms.IntegerField(disabled=True)
         
 class PaymentForm(forms.ModelForm):
     class Meta:

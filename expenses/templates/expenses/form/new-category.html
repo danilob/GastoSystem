@@ -7,6 +7,11 @@
     </div>
     
 </form>
+<div class="list-categories">
+    {% for category in categories %}
+       {{ category }}
+    {% endfor %}   
+</div>
 <div class="output"></div>
 <script>
     $(".output").hide();

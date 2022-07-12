@@ -5,7 +5,7 @@
         <input type="button" class="btn btn-red sub white small "  id="cancelModal" value="Cancelar">
         <input class="btn btn-gray sub white small " type="submit" value="Enviar">
     </div>
-    
+
 </form>
 <div class="output"></div>
 <script>
@@ -58,11 +58,7 @@
             type : "POST", 
             url: "{% url 'expenses:handle_payment' %}",
             data: {
-                category : $('#id_category').val(),
-                payment : $('#id_payment').val(),
                 description : $('#id_description').val(),
-                value : $('#id_value').val(),
-                date : $('#id_date').val(),
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'post'
             },
