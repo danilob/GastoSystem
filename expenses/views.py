@@ -312,7 +312,7 @@ def handle_payment(request):
         form = PaymentForm()
   context = {
     'form': form,
-    'limits': Limit.objects.all(),
+    'payments': Payment.objects.all(),
   }
   html_page = render_to_string('expenses/form/new-payment.html', context)
   response = {
