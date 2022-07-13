@@ -140,7 +140,7 @@
                     $("#elementId").val();
                     update_limit_value($('#list_month_year :selected').val());
                 }
-                if(last_action=='edit-expense'){
+                if(last_action=='edit-expense' || last_action=='create-expense'){
                     window.open("{% url 'expenses:home' %}","_self")
                 }
             });
