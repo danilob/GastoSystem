@@ -70,7 +70,7 @@
             <p class="col-1">{{ item.payment.description|title }}</p>
             <p class="col-1">R$ {{ item.value|floatformat:2 }}</p>
             <div class="action-item col-1">
-                <div class="btn-inline">
+                <div class="btn-inline" data-action="delete-expense" data-id="{{ item.id }}">
                     <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
                 </div>
                 <div class="btn-inline action-modal" data-action="edit-expense" data-id="{{ item.id }}">
@@ -143,6 +143,7 @@
                 'handle-payment': "{% url 'expenses:handle_payment' %}",
                 'handle-category': "{% url 'expenses:handle_category' %}",
                 'edit-expense': "{% url 'expenses:edit_expense' %}",
+                'delete-expense': "{% url 'expenses:delete_expense' %}",
             }
 
             $(".action-modal").on('click', function(){
@@ -160,6 +161,11 @@
                 if($(this).data().action == 'edit-category'){
                     new_data = {
                         id: $(this).data().id,
+                    }
+                }
+                if($(this).data().action == 'delete-expense'){
+                    new_data = {
+                        delete_expense: expense.delete()
                     }
                 }
                 if($(this).data().action == 'handle-limit'){

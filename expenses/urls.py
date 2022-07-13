@@ -21,6 +21,7 @@ urlpatterns = [
     path('handle/payment', handle_payment, name="handle_payment"),
     path('handle/category', handle_category, name="handle_category"),
     path('edit/expense', edit_expense, name="edit_expense"),
+    path('delete/expense', delete_expense, name="delete_expense")
 
     
 ]

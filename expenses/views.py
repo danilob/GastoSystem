@@ -340,3 +340,17 @@ def edit_expense(request):
     
   }
   return JsonResponse(response, status = 200)
+
+def delete_expense(request):
+  title = 'Alterar Gasto'
+  expense = Expense.objects.get(id=request.GET['id'])
+  context = {
+    'expense': expense,
+  }
+  html_page = render_to_string('expenses/form/edit-expense.html', context)
+  response = {
+    'title' : title,
+    'html' : html_page,
+    
+  }
+  return JsonResponse(response, status = 200)
