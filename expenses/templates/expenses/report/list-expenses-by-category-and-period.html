@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Calcular total gasto por período e forma de pagamento{% endblock %}
+{% block style %}
+<link href="{% static 'expenses/css/report-expense.css' %}" rel="stylesheet"/> 
+
+<link href="{% static 'expenses/css/modal.css' %}" rel="stylesheet"/> 
+{% endblock %}
+{% block content %}       
+<div class="breadcamp"><a href="{% url 'expenses:report' %}">Todos os Relatórios</a>/Calcular total gasto por período e forma de pagamento</div>
+<div class="content-report">
+  <form action="{% url 'expenses:list_category_by_period' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-gray sub white small " value="Enviar">
+  </form>
+  
+  
+
+  {% if list_categories %}
+  <div class="list-expenses">
+    <div class="description-top">
+        <p>Período: de {{ begin|date:"d/m/Y" }} a {{ end|date:"d/m/Y" }}</p>
+    </div>
+  <div class="description-itens">
+    <p class="col-4">Categoria</p>
+    <p class="col-4">Total</p>
+</div>
+{% for result in list_categories %}
+<div class="line-item">
+    <p class="col-4">{{ result.category }}</p>
+    <p class="col-4">R$ {{ result.total }}</p>
+</div>
+
+{% endfor %}
+</div>
+  {% endif %}
+</div>
+  {% endblock %}
+

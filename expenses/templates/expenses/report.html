@@ -6,10 +6,10 @@
 
     <ul class="report-list">
         <li><a href="{% url 'expenses:list_expenses_by_category' %}">Relatório de Gastos Mensais por Categoria</a></li>
-        <li>Listar os gastos do mês, limite de gastos estabelecido e se houve superação do limite</li>
-        <li>Identificar categoria de gasto que houve maior despesa por período</li>
-        <li>Calcular total gasto por período e forma de pagamento</li>
-        <li>Mostrar todos os gastos por período</li>
-        <li>Identificar em que mês e ano houve maior despesa por tipo de gasto</li>
+        <li><a href="{% url 'expenses:list_total_expenses_and_limit' %}">Listar os gastos do mês, limite de gastos estabelecido e limite</a></li>
+        <li><a href="{% url 'expenses:list_category_by_period' %}">Identificar categoria de gasto de maior despesa por período</a></li>
+        <li><a href="{% url 'expenses:sum_expenses_payment_and_period' %}"">Calcular total gasto por período e forma de pagamento</a></li>
+        <li><a href="{% url 'expenses:list_expenses_by_period' %}">Mostrar todos os gastos por período</a></li>
+        <li><a href="{% url 'expenses:list_expenses_by_category_top' %}">Identificar Maior Despesa por Categoria</a></li>
     </ul>
 {% endblock %}

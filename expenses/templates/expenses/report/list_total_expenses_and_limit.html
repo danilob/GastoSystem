@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Listar os gastos do mês, limite de gastos estabelecido e limite{% endblock %}
+{% block style %}
+<link href="{% static 'expenses/css/report-expense.css' %}" rel="stylesheet"/> 
+
+<link href="{% static 'expenses/css/modal.css' %}" rel="stylesheet"/> 
+{% endblock %}
+{% block content %}       
+<div class="breadcamp"><a href="{% url 'expenses:report' %}">Todos os Relatórios</a>/Listar os gastos do mês, limite de gastos estabelecido e limite</div>
+<div class="content-report">
+  {% if list %}
+
+  <div class="list-expenses">
+    <div class="description-top">
+        <p>Total de Gastos e Limite</p>
+    </div>
+    <div class="description-itens">
+        <p class="col-1">Mês</p>
+        <p class="col-1">Ano</p>
+        <p class="col-3">Total Gastos</p>
+        <p class="col-2">Limite</p>
+        <p class="col-1">Ultrapassou?</p>
+    </div>
+
+    {% for result in list %}
+    <div class="line-item">
+        <p class="col-1">{{ result.month }}</p>
+        <p class="col-1">{{ result.year  }}</p>
+        <p class="col-3">R$ {{ result.expense|floatformat:2 }}</p>
+        <p class="col-2">R$ {{ result.limit|floatformat:2 }}</p>
+        <p class="col-1">{% if result.up %}X{% endif %}</p>
+    </div>
+    {% endfor %}
+</div>
+
+  {% endif %}
+</div>
+  {% endblock %}
+

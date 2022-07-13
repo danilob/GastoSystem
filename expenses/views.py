@@ -54,10 +54,7 @@ def home(request,page=None):
   today = datetime.now()
   current_month = today.month
   current_year = today.year
-  #print("Data de Hoje",current_month,current_year)
   total_current_month = Expense.objects.filter(date__month=current_month,date__year=current_year).aggregate(total=Sum('value'))
-  #print("Total do Mes corrent", total_current_month)
-  #print(get_month_by_number(1))
   expense_first = Expense.objects.all().order_by('date').first()
   list_month_year_select = build_list_month_year(expense_first.date,today)
   count_expenses = Expense.objects.all().count()
@@ -115,26 +112,6 @@ def report(request):
   }
   return render(request,"expenses/report.html", context)
 
-
-
-def list_expenses_by_category(request):
-  if request.method == 'POST':
-    form = SelectCategoryForm(request.POST)
-    if form.is_valid():
-      category = form.cleaned_data['category']
-      list = Expense.list_expenses_by_category(category)
-      context = {
-        'form': form,
-        'category_selected': category,
-        'list':list,
-        'page_selected': "report",
-      }
-      return render(request,'expenses/report/list-expenses-by-category.html',context)
-  form = SelectCategoryForm()
-  context = {
-    'form': form,
-  }
-  return render(request,'expenses/report/list-expenses-by-category.html',context)
 
 from django.http import JsonResponse
 def get_total_expenses_ajax(request):
@@ -367,3 +344,147 @@ def delete_expense(request,id):
   expense = Expense.objects.get(id=id)
   expense.delete()
   return redirect(reverse('expenses:home'))
+
+
+################## Relatórios
+
+def list_expenses_by_category(request):
+  if request.method == 'POST':
+    form = SelectCategoryForm(request.POST)
+    if form.is_valid():
+      category = form.cleaned_data['category']
+      list = Expense.list_expenses_by_category(category)
+      context = {
+        'form': form,
+        'category_selected': category,
+        'list':list,
+        'page_selected': "report",
+      }
+      return render(request,'expenses/report/list-expenses-by-category.html',context)
+  form = SelectCategoryForm()
+  context = {
+    'form': form,
+    'page_selected': "report",
+  }
+  return render(request,'expenses/report/list-expenses-by-category.html',context)
+
+def list_expenses_by_category_top(request):
+  if request.method == 'POST':
+    form = SelectCategoryForm(request.POST)
+    if form.is_valid():
+      category = form.cleaned_data['category']
+      top_category = Expense.list_expenses_by_category_top(category)
+      context = {
+        'form': form,
+        'category_selected': category,
+        'top_category':top_category,
+        'page_selected': "report",
+      }
+      return render(request,'expenses/report/list-expenses-by-category-top.html',context)
+  form = SelectCategoryForm()
+  context = {
+    'form': form,
+    'page_selected': "report",
+  }
+  return render(request,'expenses/report/list-expenses-by-category-top.html',context)
+
+
+from expenses.forms import SelectIntervalPaymentForm
+def sum_expenses_payment_and_period(request):
+  if request.method == 'POST':
+    form = SelectIntervalPaymentForm(request.POST)
+    if form.is_valid():
+      payment = form.cleaned_data['payment']
+      begin = form.cleaned_data['initial']
+      end = form.cleaned_data['final']
+      total = Expense.sum_expenses_payment_and_period(payment, begin, end)
+      context = {
+        'form': form,
+        'begin' : form.cleaned_data['initial'],
+        'end' : form.cleaned_data['final'],
+        'payment_selected': payment,
+        'total':total,
+        'page_selected': "report",
+      }
+      return render(request,'expenses/report/list-expenses-by-payment-and-period.html',context)
+  form = SelectIntervalPaymentForm()
+  context = {
+    'form': form,
+    'page_selected': "report",
+  }
+  return render(request,'expenses/report/list-expenses-by-payment-and-period.html',context)
+
+
+from expenses.forms import SelectIntervalExpenseForm
+def list_expenses_by_period(request):
+  if request.method == 'POST':
+    form = SelectIntervalExpenseForm(request.POST)
+    if form.is_valid():
+      begin = form.cleaned_data['initial']
+      end = form.cleaned_data['final']
+      list = Expense.list_expenses_by_period(begin, end)
+      context = {
+        'form': form,
+        'begin' : form.cleaned_data['initial'],
+        'end' : form.cleaned_data['final'],
+        'list_item_expenses': list,
+        'page_selected': "report",
+      }
+      return render(request,'expenses/report/list-expenses-by-period.html',context)
+  form = SelectIntervalExpenseForm()
+  context = {
+    'form': form,
+    'page_selected': "report",
+  }
+  return render(request,'expenses/report/list-expenses-by-period.html',context)
+
+
+def list_category_by_period(request):
+  if request.method == 'POST':
+    form = SelectIntervalExpenseForm(request.POST)
+    if form.is_valid():
+      begin = form.cleaned_data['initial']
+      end = form.cleaned_data['final']
+      list = Expense.list_category_by_period(begin, end)
+      context = {
+        'form': form,
+        'begin' : form.cleaned_data['initial'],
+        'end' : form.cleaned_data['final'],
+        'list_categories': list,
+        'page_selected': "report",
+      }
+      return render(request,'expenses/report/list-expenses-by-category-and-period.html',context)
+  form = SelectIntervalExpenseForm()
+  context = {
+    'form': form,
+    'page_selected': "report",
+  }
+  return render(request,'expenses/report/list-expenses-by-category-and-period.html',context)
+
+
+def list_total_expenses_and_limit(request):
+  today = datetime.now()
+  current_month = today.month
+  current_year = today.year
+  total_current_month = Expense.objects.filter(date__month=current_month,date__year=current_year).aggregate(total=Sum('value'))
+  expense_first = Expense.objects.all().order_by('date').first()
+  list_month_year_select = build_list_month_year(expense_first.date,today)
+  list_data = []
+  for item_month_year in list_month_year_select:
+    month = item_month_year['month_number']
+    year = item_month_year['year']
+    limit_value = Limit.get_limit_by_month_and_year(month,year)
+    expense_value = Expense.get_total_by_month_and_year(month,year)
+    list_data.append({
+      'month' : get_month_by_number(month),
+      'year' : year,
+      'limit':limit_value,
+      'expense':expense_value,
+      'up': expense_value>limit_value
+      
+    })
+    context = {
+      'list': list_data,
+    }
+  
+  return render(request,'expenses/report/list_total_expenses_and_limit.html',context)

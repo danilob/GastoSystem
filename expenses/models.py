@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.db.models import Sum
 
 class Category(models.Model):
     description = models.CharField("Categoria", max_length=150,primary_key=True)
@@ -60,13 +61,41 @@ class Expense(models.Model):
       return f'{self.category.description.upper()} -{self.description.upper()} ({self.value})'
 
     @staticmethod
+    def get_total_by_month_and_year(month,year):
+      return Expense.objects.filter(date__month=month,date__year=year).aggregate(total=Sum('value'))['total'] if Expense.objects.filter(date__month=month,date__year=year).aggregate(total=Sum('value'))['total'] else 0
+      
+    @staticmethod
     def list_expenses_by_category(category):
-      from django.db.models import Sum
       return Expense.objects.filter(category=category).values(
         'date__year','date__month'
         ).annotate(total=Sum('value')).order_by(
           '-date__year','-date__month'
           )
+    
+    @staticmethod
+    def list_category_by_period(begin,end):
+      return Expense.objects.filter(date__lte=end,date__gte=begin).values(
+        'category'
+        ).annotate(total=Sum('value')).order_by(
+          '-total'
+          )
+      print(values)
+      
+    @staticmethod
+    def list_expenses_by_category_top(category):
+      return Expense.objects.filter(category=category).values(
+        'date__year','date__month'
+        ).annotate(total=Sum('value')).order_by(
+          '-value'
+          ).first()
+
+    @staticmethod
+    def sum_expenses_payment_and_period(payment, begin, end):
+      return Expense.objects.filter(payment=payment,date__lte=end,date__gte=begin).aggregate(total=Sum('value'))
+
+    @staticmethod
+    def list_expenses_by_period(begin,end):
+      return Expense.objects.filter(date__lte=end,date__gte=begin)
 
     def clean(self):
       if self.value<0:
@@ -95,6 +124,10 @@ class Limit(models.Model):
 
     def __str__(self):
       return f'{self.month}/{self.year} - {self.value}'
+
+    @staticmethod
+    def get_limit_by_month_and_year(month,year):
+      return Limit.objects.get(month=month,year=year).value if Limit.objects.filter(month=month,year=year).exists() else 0
 
     def clean(self):
       if self.month>12 or self.month<1:

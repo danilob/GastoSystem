@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Identificar Maior Despesa por Categoria{% endblock %}
+{% block style %}
+<link href="{% static 'expenses/css/report-expense.css' %}" rel="stylesheet"/> 
+
+<link href="{% static 'expenses/css/modal.css' %}" rel="stylesheet"/> 
+{% endblock %}
+{% block content %}       
+<div class="breadcamp"><a href="{% url 'expenses:report' %}">Todos os Relatórios</a>/Identificar Maior Despesa por Categoria</div>
+<div class="content-report">
+  <form action="{% url 'expenses:list_expenses_by_category_top' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-gray sub white small " value="Enviar">
+  </form>
+  
+  
+
+  {% if category_selected %}
+
+  <div class="list-expenses">
+    <div class="description-top">
+        <p>Categoria: {{ category_selected }}</p>
+        <p>Maior Gasto em: {{ top_category.date__month }}/{{ top_category.date__year }}</p>
+        <p>Total: R$ {{ top_category.total }}</p>
+    </div>
+</div>
+
+  {% endif %}
+
+  {% endblock %}
+
