@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 class Category(models.Model):
     description = models.CharField("Categoria", max_length=150,primary_key=True)
+    create_date = models.DateField("Data de Criação",auto_now=True)
 
     class Meta:
       ordering = ["description"]
@@ -14,7 +16,8 @@ class Category(models.Model):
 
 class Payment(models.Model):
     description = models.CharField("Forma de Pagamento", max_length=150,primary_key=True)
-
+    create_date = models.DateField("Data de Criação",auto_now=True)
+    
     class Meta:
       ordering = ["description"]
       verbose_name = "Categoria de Pagamento"
