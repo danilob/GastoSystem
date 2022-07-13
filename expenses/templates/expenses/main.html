@@ -28,7 +28,7 @@
                 <p>Inserir ou Alterar</p>
             </div>
             <div class="btn-actions">
-                <div class="btn btn-red action-modal" data-action="handle-limit">
+                <div class="btn btn-red action-modal" data-action="handle-limit" >
                     <img class="svg-white" src="{% static 'expenses/img/icon/arrow-trend-up-solid.svg' %}" />
                 </div>  
                 <div class="btn btn-gray action-modal" data-action="create-expense">
@@ -41,6 +41,13 @@
                     <img class="svg-gray" src="{% static 'expenses/img/icon/pizza-slice-solid.svg' %}" />
                 </div> 
             </div>
+            <script>
+                var btn = document.querySelector("#refresh");
+                btn.addEventListener("click", function() {
+    
+                    ocation.reload();
+                });
+            </script>
         </div>
     </div>
     <div class="list-expenses">
@@ -143,7 +150,11 @@
                 new_data = {}
                 if($(this).data().action == 'edit-expense'){
                     new_data = {
-                        id: $(this).data().id,
+                        category: $('#category :selected').val(),
+                        payment: $('#payment :selected').val(),
+                        description: $('#description :selected').val(),
+                        value: $('#value :selected').val(),
+                        date: $('#date :selected').val(),
                     }
                 }
                 if($(this).data().action == 'edit-category'){
@@ -159,6 +170,7 @@
                 $.ajax({
                     type: 'GET',
                     url: action_modal[$(this).data().action],
+                    data: new_data, 
                     success: function (response) {
                         $('.modal-description').text(response.title);
                         $('.modal-content').html(response.html);

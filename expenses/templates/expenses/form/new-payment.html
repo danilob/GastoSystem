@@ -1,13 +1,32 @@
+{% load static %}
+{% block style %}
+    <link href="{% static 'expenses/css/modal.css' %}" rel="stylesheet"/> 
+{% endblock %}
+
 <form method="POST" id="formPayment">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <div class="list-payments">
+    <div class="list-payment">
+        <div class="description-top">
+            <p>Alterar Forma de Pagamento</p>
+        </div>
+        <div class="description-itens">
+            <p class="col-7">Descrição</p>
+            <p class="col-1">Excluir</p>
+        </div>
         {% for payment in payments %}
-           {{ payment }}
-        {% endfor %}   
+        <div class="line-item">
+            <p class="col-7">{{ payment.description }}</p>
+            <div class="action-item col-1">
+                <div class="btn-inline">
+                    <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    
+
     <div class="btn-position-modal">
         <input type="button" class="btn btn-red sub white small "  id="cancelModal" value="Cancelar">
         <input class="btn btn-gray sub white small " type="submit" value="Enviar">

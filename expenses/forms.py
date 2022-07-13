@@ -29,9 +29,11 @@ class LimitForm(forms.ModelForm):
             'year': 'Ano',
             'month': 'Mês',
             'value': 'Valor',
-        }
-    # year = forms.IntegerField(disabled=True)
-    # month = forms.IntegerField(disabled=True)
+        }  
+    year = forms.IntegerField(disabled=True)
+    month = forms.IntegerField(disabled=True)
+    
+
         
 class PaymentForm(forms.ModelForm):
     class Meta:
@@ -44,7 +46,10 @@ class EditExpenseForm(forms.ModelForm):
         fields = ['category','payment','description','value','date']
         labels = {
             'category': 'Categoria',
-            'payment': 'Pagamento'
+            'payment': 'Pagamento',
+            'description' : 'Descrição',
+            'value' : 'Valor',
+            'date' : 'data'
         }
 
 class ExpenseForm(forms.ModelForm):
