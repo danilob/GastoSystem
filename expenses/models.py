@@ -14,6 +14,9 @@ class Category(models.Model):
     def __str__(self):
       return f'{self.description.upper()}'
 
+    def is_possible_delete(self):
+      return not self.related_category.exists()
+
 class Payment(models.Model):
     description = models.CharField("Forma de Pagamento", max_length=150,primary_key=True)
     create_date = models.DateField("Data de Criação",auto_now=True)

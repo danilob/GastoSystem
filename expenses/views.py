@@ -214,6 +214,10 @@ def handle_category(request):
    
   else:
         form = CategoryForm()
+        if 'action' in request.GET and request.GET['action'] == 'delete':
+          item = request.GET['id_delete']
+          category = Category.objects.get(description__iexact=item)
+          category.delete()
   context = {
     'form': form,
     'categories': Category.objects.all()
