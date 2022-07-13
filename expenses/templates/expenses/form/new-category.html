@@ -9,6 +9,7 @@
     </div>
     
 </form>
+{% if categories %}
 <div class="list-categories">
     <div class="description-top">
         <p>Alterar Categorias</p>
@@ -32,6 +33,11 @@
     </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="description-empty">
+    <p>Nenhuma categoria foi adicionada...</p>
+</div>
+{% endif %}
 <div class="output"></div>
 <script>
     $(".output").hide();

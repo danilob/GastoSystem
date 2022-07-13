@@ -56,7 +56,8 @@ def home(request,page=None):
   current_year = today.year
   total_current_month = Expense.objects.filter(date__month=current_month,date__year=current_year).aggregate(total=Sum('value'))
   expense_first = Expense.objects.all().order_by('date').first()
-  list_month_year_select = build_list_month_year(expense_first.date,today)
+  date_begin = expense_first.date if expense_first else today
+  list_month_year_select = build_list_month_year(date_begin,today)
   count_expenses = Expense.objects.all().count()
   current_page = 1
   if page or page==0:
@@ -65,12 +66,12 @@ def home(request,page=None):
     current_page = request.session.get('session_page')
 
   num_pages = math.ceil(count_expenses/NUMBER_ITENS)
-  print(current_page)
-  if(current_page>num_pages):
-    return redirect(reverse('expenses:home', kwargs={'page': num_pages}))
-  if (current_page<1):
-    return redirect(reverse('expenses:home', kwargs={'page': 1}))
-  request.session['session_page'] = current_page
+  if num_pages:
+    if(current_page>num_pages):
+      return redirect(reverse('expenses:home', kwargs={'page': num_pages}))
+    if (current_page<1):
+      return redirect(reverse('expenses:home', kwargs={'page': 1}))
+    request.session['session_page'] = current_page
 
   
 
@@ -464,11 +465,9 @@ def list_category_by_period(request):
 
 def list_total_expenses_and_limit(request):
   today = datetime.now()
-  current_month = today.month
-  current_year = today.year
-  total_current_month = Expense.objects.filter(date__month=current_month,date__year=current_year).aggregate(total=Sum('value'))
   expense_first = Expense.objects.all().order_by('date').first()
-  list_month_year_select = build_list_month_year(expense_first.date,today)
+  date_begin = expense_first.date if expense_first else today
+  list_month_year_select = build_list_month_year(date_begin,today)
   list_data = []
   for item_month_year in list_month_year_select:
     month = item_month_year['month_number']

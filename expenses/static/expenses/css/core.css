@@ -404,3 +404,9 @@ section > header p{
 .report-list{
     margin-left: 2em;
 }
+
+.description-empty{
+    margin: 3em auto;
+    text-align: center;
+    display: block;
+}

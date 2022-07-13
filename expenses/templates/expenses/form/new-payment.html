@@ -9,6 +9,7 @@
     </div>
     
 </form>
+{% if payments %}
 <div class="list-categories">
     <div class="description-top">
         <p>Alterar Forma de Pagamento</p>
@@ -32,6 +33,11 @@
     </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="description-empty">
+    <p>Nenhuma forma de pagamento foi adicionada...</p>
+</div>
+{% endif %}
 <div class="output"></div>
 <script>
     $(".output").hide();

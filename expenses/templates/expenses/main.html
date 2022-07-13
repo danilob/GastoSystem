@@ -43,7 +43,9 @@
             </div>
         </div>
     </div>
+    {% if list_item_expenses %}
     <div class="list-expenses">
+        
         <div class="description-top">
             <p>Últimos Gastos</p>
         </div>
@@ -81,6 +83,12 @@
         </div>
         <div class="next-page-items"><a href="{% url 'expenses:home' current_page|add:'1' %}">Próxima Página</a></div>    
     </div>
+    {% else %}
+    <div class="description-empty">
+        <p>Nenhum gasto foi adicionado...</p>
+    </div>
+    
+    {% endif %}
     <script src="{% static 'expenses/js/jquery-3.6.0.min.js' %}"/></script>
 
 
