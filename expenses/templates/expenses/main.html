@@ -86,10 +86,9 @@
 
     {% include "expenses/modal.html" %}
     <script>
+        
         $(document).ready(function(){
-            $('select').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                var valueSelected = this.value;
+            function update_limit_value(valueSelected){
                 $.ajax({
                     type: 'GET',
                     url: "{% url 'expenses:get_total_expenses_ajax' %}",
@@ -105,7 +104,7 @@
                         }catch{
                             $("#total_by_month").text('0,00')
                         }
-                        
+
                         $("#limit_percent_by_month").text(response.percent)
                     },
                     error: function (response) {
@@ -113,7 +112,15 @@
                         console.log("Error", response)
                     }
                 })
+            }
+
+            $('select').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                update_limit_value(valueSelected);
             });
+
+            update_limit_value($('#list_month_year :selected').val());
             
             //controle de modal
             var modal = document.querySelector("#modal");
@@ -128,6 +135,11 @@
                 modal.classList.toggle("closed");
                 modalOverlay.classList.remove("open");
                 modalOverlay.classList.toggle("closed");
+                if(last_action=='handle-limit'){
+                    $("#elementId :selected").text(); // The text content of the selected option
+                    $("#elementId").val();
+                    update_limit_value($('#list_month_year :selected').val());
+                }
             });
 
             const action_modal = {
@@ -139,7 +151,7 @@
             }
 
             $(".action-modal").on('click', function(){
-                //console.log($(this).data().action)
+                last_action = $(this).data().action;
                 new_data = {}
                 if($(this).data().action == 'edit-category'){
                     new_data = {

@@ -254,7 +254,7 @@ def handle_limit(request):
     else:
       context_extra = {
           'response' : 'Erros ocorreram!',
-          'error': True
+          'error': True,
       }
    
   else:
