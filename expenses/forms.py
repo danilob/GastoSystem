@@ -6,6 +6,13 @@ from expenses.models import Category
 class SelectCategoryForm(forms.Form):
     category = forms.ModelChoiceField(label="Categoria",queryset=Category.objects.all())
 
+
+class SelectIntervalPaymentForm(forms.Form):
+    DATE_INPUT_FORMATS = ['%d/%m/%Y','%d%m%Y']
+    payment = forms.ModelChoiceField(label="Payment",queryset=Payment.objects.all())
+    initial = forms.DateField(label='Data Inicial',input_formats=DATE_INPUT_FORMATS)
+    initial = forms.DateField(label='Data Final',input_formats=DATE_INPUT_FORMATS)
+
 from expenses.models import Expense
 
 from django.core.exceptions import ValidationError

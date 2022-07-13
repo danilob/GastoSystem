@@ -19,7 +19,8 @@ urlpatterns = [
     path('handle/limit', handle_limit, name="handle_limit"),
     path('handle/payment', handle_payment, name="handle_payment"),
     path('handle/category', handle_category, name="handle_category"),
-    path('edit/expense',edit_expense,name="edit_expense")
+    path('edit/expense',edit_expense,name="edit_expense"),
+    path('delete/expense/<int:id>',delete_expense,name="delete_expense"),
 
     
 ]

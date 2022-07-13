@@ -129,12 +129,12 @@ def list_expenses_by_category(request):
         'list':list,
         'page_selected': "report",
       }
-      return render(request,'expenses/list-expenses-by-category.html',context)
+      return render(request,'expenses/report/list-expenses-by-category.html',context)
   form = SelectCategoryForm()
   context = {
     'form': form,
   }
-  return render(request,'expenses/list-expenses-by-category.html',context)
+  return render(request,'expenses/report/list-expenses-by-category.html',context)
 
 from django.http import JsonResponse
 def get_total_expenses_ajax(request):
@@ -143,11 +143,15 @@ def get_total_expenses_ajax(request):
     month_selected = values[0]
     year_selected = values[1]
     total = Expense.objects.filter(date__month=month_selected,date__year=year_selected).aggregate(total=Sum('value'))
-    total_expenses = total['total']
+    print('TOTAL', total)
+    total_expenses = total['total'] if ('total' in total) else 0
     percent = '??'
     if Limit.objects.filter(month=month_selected,year=year_selected).exists():
       limit = Limit.objects.get(month=month_selected,year=year_selected).value
-      percent = int(100*total_expenses/limit)
+      try:
+        percent = int(100*total_expenses/limit)
+      except:
+        percent = 0
     response = {
       'data':total_expenses,
       'percent':f'{percent} %'
@@ -324,14 +328,42 @@ def handle_payment(request):
 
 def edit_expense(request):
   title = 'Alterar Gasto'
-  expense = Expense.objects.get(id=request.GET['id'])
+  context_extra = {}
+  if request.POST.get('action') == 'post':
+    expense = Expense.objects.get(id=int(request.POST.get('id')))
+    form = ExpenseForm(request.POST,instance=expense)
+    
+    if form.is_valid():
+      model = form.save(commit=False)
+      model.save()
+      context_extra = {
+          'response' : 'Alterado com sucesso!',
+          'error': False,
+      }
+    else:
+      context_extra = {
+          'response' : 'Erros ocorreram!',
+          'error': True
+      }
+   
+  else:
+    expense = Expense.objects.get(id=request.GET['id'])
+    form = ExpenseForm(instance=expense)
   context = {
-    'expense': expense,
+    'form': form,
+    'id_expense': expense.id
   }
   html_page = render_to_string('expenses/form/edit-expense.html', context)
   response = {
     'title' : title,
     'html' : html_page,
-    
+    'response' : context_extra['response'] if 'response' in context_extra else None,
+    'error': context_extra['error'] if 'error' in context_extra else None,
   }
   return JsonResponse(response, status = 200)
+
+
+def delete_expense(request,id):
+  expense = Expense.objects.get(id=id)
+  expense.delete()
+  return redirect(reverse('expenses:home'))

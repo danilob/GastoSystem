@@ -63,10 +63,10 @@
             <p class="col-1">{{ item.payment.description|title }}</p>
             <p class="col-1">R$ {{ item.value|floatformat:2 }}</p>
             <div class="action-item col-1">
-                <div class="btn-inline">
+                <div class="btn-inline delete-expense" data-action="delete-expense" data-id="{{ item.id }}">
                     <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
                 </div>
-                <div class="btn-inline action-modal" data-action="edit-category" data-id="{{ item.id }}">
+                <div class="btn-inline action-modal" data-action="edit-expense" data-id="{{ item.id }}">
                     <img src="{% static 'expenses/img/icon/edit-solid.svg' %}" />
                 </div>
             </div>
@@ -140,6 +140,9 @@
                     $("#elementId").val();
                     update_limit_value($('#list_month_year :selected').val());
                 }
+                if(last_action=='edit-expense'){
+                    window.open("{% url 'expenses:home' %}","_self")
+                }
             });
 
             const action_modal = {
@@ -147,17 +150,24 @@
                 'handle-limit': "{% url 'expenses:handle_limit' %}",
                 'handle-payment': "{% url 'expenses:handle_payment' %}",
                 'handle-category': "{% url 'expenses:handle_category' %}",
-                'edit-category': "{% url 'expenses:edit_expense' %}",
+                'edit-expense': "{% url 'expenses:edit_expense' %}",
             }
 
+            $(".delete-expense").on('click', function(){
+                if($(this).data().action == 'delete-expense'){
+                    id = $(this).data().id;
+                    window.open("{% url 'expenses:delete_expense' '0' %}".replace('0',id),"_self")
+                }
+x            });
             $(".action-modal").on('click', function(){
                 last_action = $(this).data().action;
                 new_data = {}
-                if($(this).data().action == 'edit-category'){
+                if($(this).data().action == 'edit-expense'){
                     new_data = {
                         id: $(this).data().id,
                     }
                 }
+                
                 if($(this).data().action == 'handle-limit'){
                     new_data = {
                         month_year: $('#list_month_year :selected').val(),
