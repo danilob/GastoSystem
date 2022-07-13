@@ -10,11 +10,16 @@ from expenses.models import Expense
 
 from django.core.exceptions import ValidationError
 
-from expenses.models import Category
+from expenses.models import Category, Payment
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
+        fields = '__all__'
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
         fields = '__all__'
 
 from expenses.models import Limit

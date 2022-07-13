@@ -29,6 +29,9 @@ class Payment(models.Model):
     def __str__(self):
       return f'{self.description.upper()}'
 
+    def is_possible_delete(self):
+      return not self.related_payment.exists()
+
 
 class Expense(models.Model):
     category = models.ForeignKey(Category,

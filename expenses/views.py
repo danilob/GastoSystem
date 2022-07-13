@@ -282,12 +282,43 @@ def handle_limit(request):
   }
   return JsonResponse(response, status = 200)
 
+from expenses.forms import PaymentForm
+
 def handle_payment(request):
-  title = 'Inserir Forma de Pagamento'
+  title = "Inserir Forma de Pagamento"
+  context_extra = {}
+  if request.POST.get('action') == 'post':
+    form = PaymentForm(request.POST)
+    
+    if form.is_valid():
+      model = form.save(commit=False)
+      model.save()
+      context_extra = {
+          'response' : 'Criado com sucesso!',
+          'error': False,
+      }
+    else:
+      context_extra = {
+          'response' : 'Erros ocorreram!',
+          'error': True
+      }
+   
+  else:
+        form = PaymentForm()
+        if 'action' in request.GET and request.GET['action'] == 'delete':
+          item = request.GET['id_delete']
+          payment = Payment.objects.get(description__iexact=item)
+          payment.delete()
+  context = {
+    'form': form,
+    'payments': Payment.objects.all()
+  }
+  html_page = render_to_string('expenses/form/new-payment.html', context)
   response = {
     'title' : title,
-    'html' : 'a fazer...',
-    
+    'html' : html_page,
+    'response' : context_extra['response'] if 'response' in context_extra else None,
+    'error': context_extra['error'] if 'error' in context_extra else None,
   }
   return JsonResponse(response, status = 200)
 
