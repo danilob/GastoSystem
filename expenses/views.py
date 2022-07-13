@@ -342,15 +342,23 @@ def edit_expense(request):
   return JsonResponse(response, status = 200)
 
 def delete_expense(request):
-  title = 'Alterar Gasto'
-  expense = Expense.objects.get(id=request.GET['id'])
+  title = 'Confirme para deletar:'
+  context_extra = {}
   context = {
-    'expense': expense,
+    'id': request.GET.get('id')
   }
-  html_page = render_to_string('expenses/form/edit-expense.html', context)
+  if request.GET.get('action') == 'delete':
+     id = request.GET.get('id')
+     Expense.objects.filter(id=id).delete()
+     context_extra = {
+          'response' : 'Deletado com sucesso!',
+          'error': False,
+     }
+  html_page = render_to_string('expenses/form/delete-expense.html', context)
   response = {
     'title' : title,
     'html' : html_page,
-    
+    'response' : context_extra['response'] if 'response' in context_extra else None,
+    'error': context_extra['error'] if 'error' in context_extra else None,
   }
   return JsonResponse(response, status = 200)

@@ -42,11 +42,10 @@
                 </div> 
             </div>
             <script>
-                var btn = document.querySelector("#refresh");
+                {% comment %} var btn = document.querySelector("#refresh");
                 btn.addEventListener("click", function() {
     
-                    ocation.reload();
-                });
+                }); {% endcomment %}
             </script>
         </div>
     </div>
@@ -70,7 +69,7 @@
             <p class="col-1">{{ item.payment.description|title }}</p>
             <p class="col-1">R$ {{ item.value|floatformat:2 }}</p>
             <div class="action-item col-1">
-                <div class="btn-inline" data-action="delete-expense" data-id="{{ item.id }}">
+                <div class="btn-inline action-modal" data-action="delete-expense" data-id="{{ item.id }}">
                     <img class="svg-red" src="{% static 'expenses/img/icon/trash-can-solid.svg' %}" />
                 </div>
                 <div class="btn-inline action-modal" data-action="edit-expense" data-id="{{ item.id }}">
@@ -163,11 +162,13 @@
                         id: $(this).data().id,
                     }
                 }
-                if($(this).data().action == 'delete-expense'){
+                if($(this).data().id){
                     new_data = {
-                        delete_expense: expense.delete()
+                        id: $(this).data().id,
                     }
                 }
+                
+                
                 if($(this).data().action == 'handle-limit'){
                     new_data = {
                         month_year: $('#list_month_year :selected').val(),
